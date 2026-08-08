@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raizen — Tecnologia para o campo</title>
+<meta name="description" content="Raizen combina dados, IA e agricultura de precisão para ajudar produtores a tomar decisões melhores.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=clash-display@600,700&display=swap">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --forest-950:#01120b;
+  --forest-900:#023A22;
+  --forest-800:#0a4a2c;
+  --forest-700:#125c38;
+  --forest-600:#1c7248;
+  --sage-500:#7bbf87;
+  --sage-300:#B8DDB5;
+  --sage-200:#d3ecce;
+  --sage-100:#e9f5e5;
+  --cream:#f6f4ec;
+  --sand:#efece0;
+  --ink:#0c1911;
+  --ink-soft:#3d4a41;
+  --line:rgba(2,58,34,0.12);
+  --white:#ffffff;
+  --shadow-lg: 0 30px 60px -20px rgba(2,20,12,0.35);
+  --shadow-sm: 0 8px 24px -12px rgba(2,20,12,0.25);
+  --radius-lg: 28px;
+  --radius-md: 18px;
+  --radius-sm: 12px;
+  --font-display:"Clash Display","Fraunces",serif;
+  --font-body:"Manrope",-apple-system,BlinkMacSystemFont,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--font-body);
+  color:var(--ink);
+  background:var(--cream);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+ul{list-style:none;}
+.wrap{max-width:1280px;margin:0 auto;padding:0 32px;}
+@media(max-width:640px){.wrap{padding:0 20px;}}
+
+h1,h2,h3,h4{font-family:var(--font-display);font-weight:600;letter-spacing:-0.01em;line-height:1.05;color:var(--forest-950);}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:12.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--sage-300);
+  padding:8px 16px;border:1px solid rgba(184,221,181,0.35);
+  border-radius:999px; background:rgba(184,221,181,0.08);
+}
+.eyebrow.dark{color:var(--forest-800);border-color:var(--line);background:rgba(2,58,34,0.05);}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--sage-300);flex:none;}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:15px 26px;border-radius:999px;font-weight:700;font-size:15px;
+  transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease, background .3s ease;
+  white-space:nowrap;
+}
+.btn-primary{background:var(--sage-300);color:var(--forest-950);box-shadow:0 14px 30px -10px rgba(184,221,181,0.5);}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 20px 36px -12px rgba(184,221,181,0.65);}
+.btn-ghost{background:rgba(255,255,255,0.08);color:#fff;border:1px solid rgba(255,255,255,0.28);}
+.btn-ghost:hover{background:rgba(255,255,255,0.16);transform:translateY(-3px);}
+.btn-dark{background:var(--forest-900);color:#fff;box-shadow:0 14px 30px -12px rgba(2,58,34,0.45);}
+.btn-dark:hover{transform:translateY(-3px);background:var(--forest-800);}
+.btn-outline-dark{border:1.5px solid var(--line);color:var(--forest-950);}
+.btn-outline-dark:hover{background:var(--forest-950);color:#fff;border-color:var(--forest-950);}
+.btn-sm{padding:10px 16px;font-size:13px;border-radius:999px;}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1);}
+.reveal.in{opacity:1;transform:translateY(0);}
+.reveal-delay-1{transition-delay:.08s;}
+.reveal-delay-2{transition-delay:.16s;}
+.reveal-delay-3{transition-delay:.24s;}
+.reveal-delay-4{transition-delay:.32s;}
+
+/* ============ NAVBAR ============ */
+header.nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  padding:22px 0; transition:all .4s ease;
+}
+header.nav .wrap{display:flex;align-items:center;justify-content:space-between;}
+header.nav.scrolled{
+  padding:12px 0; background:rgba(1,18,11,0.72); backdrop-filter:blur(18px);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.logo{display:flex;align-items:center;gap:10px;color:#fff;}
+.logo-mark{width:34px;height:34px;border-radius:10px;background:linear-gradient(150deg,var(--sage-300),var(--forest-600));display:flex;align-items:center;justify-content:center;flex:none;}
+.logo-mark svg{width:18px;height:18px;}
+.logo-text{display:flex;flex-direction:column;line-height:1;}
+.logo-text b{font-family:var(--font-display);font-size:19px;letter-spacing:0.01em;}
+.logo-text span{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--sage-300);margin-top:3px;}
+
+.nav-links{display:flex;align-items:center;gap:34px;}
+.nav-links a{font-size:14.5px;font-weight:600;color:rgba(255,255,255,0.82);position:relative;padding:6px 0;transition:color .25s;}
+.nav-links a:hover{color:#fff;}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:2px;background:var(--sage-300);transition:width .3s;}
+.nav-links a:hover::after{width:100%;}
+.nav-cta{display:flex;align-items:center;gap:14px;}
+.burger{display:none;width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,0.1);align-items:center;justify-content:center;flex-direction:column;gap:5px;}
+@media(max-width:920px){
+  .nav-links{display:none;}
+  #navCtaDesktop{display:none;}
+  .burger{display:flex;}
+}
+.burger span{width:18px;height:2px;background:#fff;border-radius:2px;transition:.3s;}
+.mobile-menu{position:fixed;inset:0;background:var(--forest-950);z-index:300;display:flex;flex-direction:column;padding:26px 24px;transform:translateX(100%);transition:transform .45s cubic-bezier(.2,.8,.2,1);}
+.mobile-menu.open{transform:translateX(0);}
+.mobile-menu .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:44px;}
+.mobile-menu .close-btn{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,0.1);color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;}
+.mobile-menu a{display:block;font-family:var(--font-display);font-size:28px;color:#fff;padding:16px 0;border-bottom:1px solid rgba(255,255,255,0.08);}
+.mobile-menu .mm-cta{margin-top:auto;display:flex;flex-direction:column;gap:12px;}
+
+/* ============ HERO ============ */
+.hero{position:relative;min-height:100svh;display:flex;align-items:flex-end;overflow:hidden;background:#04150d;}
+.hero-bg{position:absolute;inset:0;}
+.hero-bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.06);}
+.hero-scrim{position:absolute;inset:0;
+  background:
+    linear-gradient(100deg, rgba(1,18,11,0.94) 4%, rgba(1,18,11,0.72) 32%, rgba(1,18,11,0.28) 58%, rgba(1,18,11,0.15) 100%),
+    linear-gradient(to top, rgba(1,18,11,0.95) 0%, rgba(1,18,11,0.15) 42%, rgba(1,18,11,0.05) 60%);
+}
+.hero-inner{position:relative;z-index:2;width:100%;padding:170px 0 64px;}
+.hero-grid{display:grid;grid-template-columns:1.15fr 0.85fr;gap:40px;align-items:end;}
+.hero-copy{max-width:640px;}
+.hero-copy .eyebrow{margin-bottom:22px;}
+.hero-copy h1{font-size:clamp(38px,5.4vw,68px);color:#fff;margin:18px 0 22px;}
+.hero-copy h1 em{font-style:normal;color:var(--sage-300);display:block;}
+.hero-copy p{font-size:17.5px;line-height:1.65;color:rgba(255,255,255,0.78);max-width:520px;margin-bottom:34px;}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
+
+.live-card{
+  background:rgba(8,26,17,0.62); backdrop-filter:blur(22px);
+  border:1px solid rgba(255,255,255,0.14); border-radius:var(--radius-md);
+  padding:22px; color:#fff; box-shadow:var(--shadow-lg); justify-self:end; width:100%; max-width:320px;
+}
+.live-card .lc-head{display:flex;align-items:center;justify-content:between;gap:8px;margin-bottom:16px;}
+.lc-head .pulse-dot{width:8px;height:8px;border-radius:50%;background:#6be08a;box-shadow:0 0 0 0 rgba(107,224,138,0.6);animation:pulse 2s infinite;flex:none;}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(107,224,138,0.55);}70%{box-shadow:0 0 0 9px rgba(107,224,138,0);}100%{box-shadow:0 0 0 0 rgba(107,224,138,0);}}
+.lc-head span{font-size:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:rgba(255,255,255,0.7);}
+.lc-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-top:1px solid rgba(255,255,255,0.09);}
+.lc-row:first-of-type{border-top:none;}
+.lc-row .lbl{font-size:13.5px;color:rgba(255,255,255,0.68);}
+.lc-row .val{font-size:14px;font-weight:700;}
+.lc-row .val.good{color:var(--sage-300);}
+.bar-track{height:4px;border-radius:99px;background:rgba(255,255,255,0.12);margin-top:6px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--sage-300),#6be08a);}
+
+.hero-stats{position:relative;z-index:2;border-top:1px solid rgba(255,255,255,0.12);}
+.hero-stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);padding:26px 32px;}
+.hs-item{display:flex;align-items:center;gap:12px;color:#fff;}
+.hs-item .num{font-family:var(--font-display);font-size:26px;color:var(--sage-300);}
+.hs-item .lbl{font-size:12.5px;color:rgba(255,255,255,0.65);line-height:1.3;}
+.hs-item .ic{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;flex:none;}
+.hs-item .ic svg{width:18px;height:18px;stroke:var(--sage-300);}
+.scroll-cue{position:absolute;left:50%;bottom:120px;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;color:rgba(255,255,255,0.6);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;}
+.scroll-cue .line{width:1px;height:34px;background:linear-gradient(to bottom, rgba(255,255,255,0.7), transparent);animation:scrolldown 1.8s infinite;}
+@keyframes scrolldown{0%{opacity:0;transform:scaleY(0.3);transform-origin:top;}50%{opacity:1;transform:scaleY(1);transform-origin:top;}100%{opacity:0;transform:scaleY(0.3);transform-origin:bottom;}}
+
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr;}
+  .live-card{justify-self:start;max-width:100%;margin-top:8px;}
+  .hero-stats .wrap{grid-template-columns:repeat(2,1fr);gap:22px;}
+  .scroll-cue{display:none;}
+}
+
+/* ============ SECTION GENERIC ============ */
+section{position:relative;padding:112px 0;}
+@media(max-width:768px){section{padding:76px 0;}}
+.section-head{max-width:660px;margin-bottom:56px;}
+.section-head .eyebrow{margin-bottom:16px;}
+.section-head h2{font-size:clamp(30px,3.6vw,44px);}
+.section-head p{font-size:16.5px;color:var(--ink-soft);margin-top:16px;line-height:1.65;}
+.section-head.split{display:flex;justify-content:space-between;align-items:flex-end;gap:40px;max-width:none;}
+@media(max-width:768px){.section-head.split{flex-direction:column;align-items:flex-start;}}
+
+/* ============ SOLUTIONS ============ */
+.solutions{background:var(--cream);}
+.sol-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+@media(max-width:980px){.sol-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:560px){.sol-grid{grid-template-columns:1fr;}}
+.sol-card{
+  background:var(--forest-950); border-radius:var(--radius-md); padding:30px 26px;
+  position:relative; overflow:hidden; min-height:230px; display:flex;flex-direction:column;justify-content:space-between;
+  transition:transform .45s cubic-bezier(.2,.8,.2,1), box-shadow .45s ease;
+  box-shadow:var(--shadow-sm);
+}
+.sol-card:nth-child(4n+2){background:var(--forest-900);}
+.sol-card:nth-child(4n+3){background:#0a2318;}
+.sol-card:nth-child(4n+4){background:#083019;}
+.sol-card:hover{transform:translateY(-8px);box-shadow:var(--shadow-lg);}
+.sol-card .sc-ic{width:46px;height:46px;border-radius:12px;background:rgba(184,221,181,0.14);display:flex;align-items:center;justify-content:center;margin-bottom:20px;}
+.sol-card .sc-ic svg{width:22px;height:22px;stroke:var(--sage-300);}
+.sol-card h3{color:#fff;font-size:19px;margin-bottom:10px;font-weight:600;}
+.sol-card p{color:rgba(255,255,255,0.62);font-size:14px;line-height:1.55;}
+.sol-card .sc-arrow{margin-top:20px;width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,0.22);display:flex;align-items:center;justify-content:center;transition:.3s;}
+.sol-card:hover .sc-arrow{background:var(--sage-300);border-color:var(--sage-300);}
+.sol-card:hover .sc-arrow svg{stroke:var(--forest-950);}
+.sol-card .sc-arrow svg{width:15px;height:15px;stroke:#fff;transition:.3s;}
+
+/* ============ TECH / DASHBOARD ============ */
+.tech{background:linear-gradient(180deg,var(--cream) 0%, var(--sand) 100%);}
+.tech-grid{display:grid;grid-template-columns:0.85fr 1.15fr;gap:60px;align-items:center;}
+@media(max-width:980px){.tech-grid{grid-template-columns:1fr;gap:44px;}}
+.tech-copy h2{font-size:clamp(28px,3.6vw,42px);margin-bottom:18px;}
+.tech-copy p{color:var(--ink-soft);font-size:16px;line-height:1.7;margin-bottom:24px;max-width:480px;}
+.check-list{display:flex;flex-direction:column;gap:14px;margin-bottom:30px;}
+.check-list li{display:flex;align-items:center;gap:12px;font-size:15px;font-weight:600;color:var(--forest-950);}
+.check-list .ck{width:22px;height:22px;border-radius:50%;background:var(--forest-900);display:flex;align-items:center;justify-content:center;flex:none;}
+.check-list .ck svg{width:11px;height:11px;stroke:var(--sage-300);}
+
+/* dashboard mock */
+.dash{
+  background:var(--forest-950); border-radius:var(--radius-lg); padding:22px;
+  box-shadow:var(--shadow-lg); border:1px solid rgba(255,255,255,0.06);
+}
+.dash-top{display:flex;justify-content:space-between;align-items:center;padding:4px 8px 18px;}
+.dash-top .dt-left{display:flex;align-items:center;gap:10px;color:#fff;font-weight:700;font-size:14.5px;}
+.dash-top .dt-left .sq{width:26px;height:26px;border-radius:8px;background:var(--sage-300);}
+.dash-tag{font-size:11px;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.15);padding:5px 10px;border-radius:99px;}
+.dash-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px;}
+.kpi{background:rgba(255,255,255,0.045);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px 14px;}
+.kpi .k-lbl{font-size:11px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px;}
+.kpi .k-val{font-family:var(--font-display);font-size:22px;color:#fff;}
+.kpi .k-val small{font-size:12px;font-weight:600;color:var(--sage-300);margin-left:4px;}
+.dash-mid{display:grid;grid-template-columns:1.3fr 1fr;gap:12px;margin-bottom:12px;}
+@media(max-width:560px){.dash-mid{grid-template-columns:1fr;}}
+.panel{background:rgba(255,255,255,0.045);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px;}
+.panel .p-head{display:flex;justify-content:space-between;color:rgba(255,255,255,0.6);font-size:12px;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.04em;}
+.spark{width:100%;height:64px;}
+.gauge-wrap{display:flex;align-items:center;gap:14px;}
+.gauge{width:74px;height:74px;border-radius:50%;background:conic-gradient(var(--sage-300) 0% 85%, rgba(255,255,255,0.09) 85% 100%);display:flex;align-items:center;justify-content:center;flex:none;}
+.gauge .g-inner{width:54px;height:54px;border-radius:50%;background:#08201458;background:var(--forest-950);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;}
+.gauge-txt{color:#fff;}
+.gauge-txt b{font-size:13px;display:block;}
+.gauge-txt span{font-size:11.5px;color:rgba(255,255,255,0.5);}
+.dash-bottom{background:rgba(255,255,255,0.045);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:16px;}
+.act-row{display:flex;align-items:center;gap:10px;padding:8px 0;color:rgba(255,255,255,0.75);font-size:13px;}
+.act-row .dotc{width:7px;height:7px;border-radius:50%;flex:none;}
+.act-row .time{margin-left:auto;color:rgba(255,255,255,0.38);font-size:11.5px;}
+
+/* ============ MAP SECTION ============ */
+.map-section{background:var(--forest-950);color:#fff;}
+.map-section .section-head p{color:rgba(255,255,255,0.62);}
+.map-section .eyebrow{color:var(--sage-300);}
+.map-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:26px;}
+@media(max-width:900px){.map-grid{grid-template-columns:1fr;}}
+.map-canvas{
+  position:relative;border-radius:var(--radius-lg);overflow:hidden;background:
+    radial-gradient(ellipse at 30% 20%, #12432b, #06170e 70%);
+  border:1px solid rgba(255,255,255,0.08); min-height:420px; padding:0;
+}
+.plot{position:absolute;border-radius:10px;opacity:0.85;transition:.3s;cursor:pointer;}
+.plot:hover{opacity:1;outline:2px solid rgba(255,255,255,0.6);}
+.marker{position:absolute;width:30px;height:30px;border-radius:50%;background:var(--sage-300);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 6px rgba(184,221,181,0.18);transform:translate(-50%,-50%);cursor:pointer;transition:.25s;}
+.marker svg{width:14px;height:14px;stroke:var(--forest-950);}
+.marker:hover{transform:translate(-50%,-50%) scale(1.15);}
+.marker.alert{background:#e7b65c;box-shadow:0 0 0 6px rgba(231,182,92,0.2);}
+.tooltip{
+  position:absolute; bottom:calc(100% + 10px); left:50%; transform:translateX(-50%);
+  background:#fff;color:var(--forest-950);padding:10px 13px;border-radius:10px;font-size:12px;font-weight:700;
+  white-space:nowrap; opacity:0; pointer-events:none; transition:.25s; box-shadow:var(--shadow-sm);
+}
+.marker:hover .tooltip{opacity:1;bottom:calc(100% + 14px);}
+.map-legend{position:absolute;left:20px;bottom:20px;display:flex;gap:16px;background:rgba(1,18,11,0.6);backdrop-filter:blur(10px);padding:10px 16px;border-radius:99px;border:1px solid rgba(255,255,255,0.12);}
+.map-legend span{font-size:11.5px;display:flex;align-items:center;gap:6px;color:rgba(255,255,255,0.8);}
+.map-legend i{width:8px;height:8px;border-radius:50%;display:inline-block;}
+
+.map-side{display:flex;flex-direction:column;gap:14px;}
+.side-card{background:rgba(255,255,255,0.045);border:1px solid rgba(255,255,255,0.09);border-radius:16px;padding:18px 20px;}
+.side-card .sc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.side-card .sc-top b{font-size:14.5px;}
+.side-card .sc-top .tag{font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:99px;text-transform:uppercase;letter-spacing:0.04em;}
+.tag.ok{background:rgba(184,221,181,0.18);color:var(--sage-300);}
+.tag.warn{background:rgba(231,182,92,0.2);color:#e7b65c;}
+.side-card p{font-size:13px;color:rgba(255,255,255,0.55);line-height:1.5;}
+
+/* ============ HOW IT WORKS ============ */
+.how{background:var(--cream);}
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;}
+@media(max-width:900px){.how-grid{grid-template-columns:1fr;gap:34px;}}
+.how-grid::before{content:"";position:absolute;top:24px;left:12%;right:12%;height:1px;background:repeating-linear-gradient(to right, var(--line) 0 8px, transparent 8px 16px);}
+@media(max-width:900px){.how-grid::before{display:none;}}
+.how-step{position:relative;padding:0 20px 0 0;}
+.how-step .hs-num{font-family:var(--font-display);font-size:15px;color:var(--sage-500);width:48px;height:48px;border-radius:50%;background:var(--forest-950);color:var(--sage-300);display:flex;align-items:center;justify-content:center;margin-bottom:22px;position:relative;z-index:2;border:6px solid var(--cream);}
+.how-step h3{font-size:18.5px;margin-bottom:10px;}
+.how-step p{font-size:14.5px;color:var(--ink-soft);line-height:1.6;}
+
+/* ============ STATS ============ */
+.stats{background:var(--forest-900);color:#fff;position:relative;overflow:hidden;}
+.stats::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 20%, rgba(184,221,181,0.12), transparent 55%);}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;position:relative;z-index:1;}
+@media(max-width:900px){.stats-grid{grid-template-columns:repeat(2,1fr);}}
+.stat-item{border-left:1px solid rgba(255,255,255,0.14);padding-left:22px;}
+.stat-item .st-num{font-family:var(--font-display);font-size:clamp(34px,4vw,52px);color:var(--sage-300);display:flex;align-items:baseline;gap:2px;}
+.stat-item .st-lbl{font-size:14px;color:rgba(255,255,255,0.65);margin-top:8px;}
+.stats-note{margin-top:44px;font-size:12.5px;color:rgba(255,255,255,0.4);position:relative;z-index:1;}
+
+/* ============ AGROIA SECTION ============ */
+.agroia-section{background:var(--forest-950);color:#fff;overflow:hidden;}
+.ag-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
+@media(max-width:900px){.ag-grid{grid-template-columns:1fr;gap:40px;}}
+.ag-copy h2{color:#fff;font-size:clamp(28px,3.6vw,42px);margin-bottom:18px;}
+.ag-copy p{color:rgba(255,255,255,0.65);font-size:16px;line-height:1.7;margin-bottom:26px;max-width:480px;}
+.ag-quick{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px;}
+.ag-quick span{font-size:12.5px;font-weight:600;padding:9px 15px;border-radius:99px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.13);color:rgba(255,255,255,0.82);}
+
+.chat-mock{background:#04150d;border:1px solid rgba(255,255,255,0.09);border-radius:var(--radius-lg);padding:20px;box-shadow:var(--shadow-lg);}
+.chat-mock .cm-head{display:flex;align-items:center;gap:10px;padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.08);}
+.cm-head .orb{width:34px;height:34px;border-radius:50%;background:linear-gradient(150deg,var(--sage-300),var(--forest-600));display:flex;align-items:center;justify-content:center;}
+.cm-head .orb svg{width:16px;height:16px;stroke:var(--forest-950);}
+.cm-head b{font-size:14px;}
+.cm-head .status{display:flex;align-items:center;gap:6px;font-size:11.5px;color:rgba(255,255,255,0.45);margin-top:2px;}
+.cm-head .status i{width:6px;height:6px;border-radius:50%;background:#6be08a;}
+.msg{max-width:85%;padding:13px 16px;border-radius:16px;font-size:13.5px;line-height:1.55;margin-bottom:12px;}
+.msg.user{background:var(--sage-300);color:var(--forest-950);margin-left:auto;border-bottom-right-radius:4px;font-weight:600;}
+.msg.bot{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);border-bottom-left-radius:4px;color:rgba(255,255,255,0.88);}
+.msg.bot b{color:var(--sage-300);}
+.msg.bot .src{display:block;margin-top:8px;font-size:11px;color:rgba(255,255,255,0.4);}
+
+/* ============ PRICING ============ */
+.pricing{background:var(--cream);}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+@media(max-width:900px){.price-grid{grid-template-columns:1fr;max-width:420px;margin:0 auto;}}
+.plan{
+  background:#fff;border:1px solid var(--line);border-radius:var(--radius-md);padding:32px 28px;
+  display:flex;flex-direction:column;transition:transform .4s ease, box-shadow .4s ease;
+}
+.plan:hover{transform:translateY(-6px);box-shadow:var(--shadow-sm);}
+.plan.featured{background:var(--forest-950);color:#fff;border-color:transparent;transform:scale(1.035);box-shadow:var(--shadow-lg);position:relative;}
+.plan.featured:hover{transform:scale(1.035) translateY(-6px);}
+@media(max-width:900px){.plan.featured{transform:none;}.plan.featured:hover{transform:translateY(-6px);}}
+.plan .badge{position:absolute;top:-13px;left:28px;background:var(--sage-300);color:var(--forest-950);font-size:11px;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;padding:6px 14px;border-radius:99px;}
+.plan .p-name{font-size:13px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--sage-500);margin-bottom:14px;}
+.plan.featured .p-name{color:var(--sage-300);}
+.plan .p-price{display:flex;align-items:baseline;gap:6px;margin-bottom:6px;}
+.plan .p-price .amt{font-family:var(--font-display);font-size:38px;}
+.plan .p-price .per{font-size:13px;color:var(--ink-soft);}
+.plan.featured .p-price .per{color:rgba(255,255,255,0.55);}
+.plan .p-desc{font-size:13.5px;color:var(--ink-soft);margin-bottom:24px;line-height:1.5;}
+.plan.featured .p-desc{color:rgba(255,255,255,0.62);}
+.plan .p-feats{display:flex;flex-direction:column;gap:12px;margin-bottom:28px;flex:1;}
+.plan .p-feats li{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;}
+.plan .p-feats .ck{width:18px;height:18px;border-radius:50%;background:var(--sage-100);display:flex;align-items:center;justify-content:center;flex:none;margin-top:1px;}
+.plan.featured .p-feats .ck{background:rgba(184,221,181,0.16);}
+.plan .p-feats .ck svg{width:9px;height:9px;stroke:var(--forest-700);}
+.plan.featured .p-feats .ck svg{stroke:var(--sage-300);}
+.plan-note{text-align:center;margin-top:36px;font-size:13px;color:var(--ink-soft);}
+
+/* ============ CTA ============ */
+.cta-band{background:linear-gradient(120deg,var(--forest-900),var(--forest-950));color:#fff;}
+.cta-inner{display:flex;justify-content:space-between;align-items:center;gap:30px;flex-wrap:wrap;}
+.cta-inner h2{color:#fff;font-size:clamp(26px,3.2vw,38px);max-width:560px;}
+.cta-inner p{color:rgba(255,255,255,0.6);margin-top:10px;max-width:480px;}
+
+/* ============ FOOTER ============ */
+footer{background:var(--forest-950);color:rgba(255,255,255,0.68);padding:70px 0 26px;}
+.f-top{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:36px;padding-bottom:52px;border-bottom:1px solid rgba(255,255,255,0.08);}
+@media(max-width:900px){.f-top{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:560px){.f-top{grid-template-columns:1fr;}}
+.f-brand p{font-size:13.5px;line-height:1.65;margin:16px 0 20px;max-width:280px;color:rgba(255,255,255,0.5);}
+.f-social{display:flex;gap:10px;}
+.f-social a{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:center;transition:.25s;}
+.f-social a:hover{background:var(--sage-300);}
+.f-social a:hover svg{stroke:var(--forest-950);}
+.f-social svg{width:15px;height:15px;stroke:#fff;}
+.f-col h4{font-size:12.5px;text-transform:uppercase;letter-spacing:0.06em;color:rgba(255,255,255,0.4);margin-bottom:18px;}
+.f-col li{margin-bottom:12px;font-size:14px;}
+.f-col a:hover{color:var(--sage-300);}
+.f-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:26px;font-size:12.5px;color:rgba(255,255,255,0.4);flex-wrap:wrap;gap:12px;}
+.f-bottom .legal{display:flex;gap:22px;}
+
+/* ============ AGROIA FLOATING WIDGET ============ */
+.ai-fab{
+  position:fixed;right:26px;bottom:26px;z-index:400;
+  width:64px;height:64px;border-radius:50%;
+  background:linear-gradient(150deg,var(--sage-300),var(--forest-600));
+  display:flex;align-items:center;justify-content:center;box-shadow:0 16px 34px -10px rgba(2,58,34,0.6);
+  transition:transform .35s cubic-bezier(.2,.8,.2,1);
+}
+.ai-fab:hover{transform:scale(1.07);}
+.ai-fab::before{content:"";position:absolute;inset:-6px;border-radius:50%;border:1.5px solid rgba(184,221,181,0.5);animation:ring 2.4s infinite;}
+@keyframes ring{0%{transform:scale(0.9);opacity:0.9;}100%{transform:scale(1.5);opacity:0;}}
+.ai-fab svg{width:26px;height:26px;stroke:var(--forest-950);position:relative;z-index:1;}
+@media(max-width:560px){.ai-fab{right:16px;bottom:16px;width:56px;height:56px;}.ai-fab svg{width:22px;height:22px;}}
+
+.ai-panel{
+  position:fixed;right:26px;bottom:104px;z-index:401;width:392px;max-width:calc(100vw - 32px);
+  height:min(600px, 74vh);background:var(--forest-950);border-radius:24px;border:1px solid rgba(255,255,255,0.1);
+  box-shadow:var(--shadow-lg);display:flex;flex-direction:column;overflow:hidden;
+  transform:translateY(24px) scale(0.97);opacity:0;pointer-events:none;transition:all .35s cubic-bezier(.2,.8,.2,1);
+}
+.ai-panel.open{transform:translateY(0) scale(1);opacity:1;pointer-events:auto;}
+@media(max-width:560px){.ai-panel{right:16px;bottom:82px;}}
+.ai-p-head{display:flex;align-items:center;gap:12px;padding:18px 20px;border-bottom:1px solid rgba(255,255,255,0.08);}
+.ai-p-head .orb{width:38px;height:38px;border-radius:50%;background:linear-gradient(150deg,var(--sage-300),var(--forest-600));display:flex;align-items:center;justify-content:center;flex:none;}
+.ai-p-head .orb svg{width:18px;height:18px;stroke:var(--forest-950);}
+.ai-p-head .titles{flex:1;}
+.ai-p-head b{color:#fff;font-size:14.5px;display:block;}
+.ai-p-head .status{font-size:11.5px;color:rgba(255,255,255,0.45);display:flex;align-items:center;gap:6px;margin-top:2px;}
+.ai-p-head .status i{width:6px;height:6px;border-radius:50%;background:#6be08a;}
+.ai-p-close{width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;flex:none;}
+.ai-p-body{flex:1;overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:12px;}
+.ai-p-body::-webkit-scrollbar{width:5px;}
+.ai-p-body::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:99px;}
+.ai-quick-row{display:flex;flex-wrap:wrap;gap:8px;padding:0 20px 14px;}
+.ai-chip{font-size:12px;font-weight:600;padding:8px 13px;border-radius:99px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.85);transition:.25s;}
+.ai-chip:hover{background:var(--sage-300);color:var(--forest-950);border-color:var(--sage-300);}
+.ai-p-input{display:flex;align-items:center;gap:10px;padding:14px 16px;border-top:1px solid rgba(255,255,255,0.08);}
+.ai-p-input input{flex:1;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:99px;padding:12px 16px;color:#fff;font-size:13.5px;outline:none;}
+.ai-p-input input::placeholder{color:rgba(255,255,255,0.35);}
+.ai-p-input button{width:40px;height:40px;border-radius:50%;background:var(--sage-300);display:flex;align-items:center;justify-content:center;flex:none;}
+.ai-p-input button svg{width:16px;height:16px;stroke:var(--forest-950);}
+.typing{display:flex;gap:4px;padding:14px 16px;background:rgba(255,255,255,0.06);border-radius:16px;border-bottom-left-radius:4px;width:fit-content;}
+.typing i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.55);animation:typing 1.2s infinite;}
+.typing i:nth-child(2){animation-delay:.15s;}
+.typing i:nth-child(3){animation-delay:.3s;}
+@keyframes typing{0%,60%,100%{transform:translateY(0);opacity:0.5;}30%{transform:translateY(-4px);opacity:1;}}
+
+/* counters count-up target class handled via JS */
+.count-target{font-variant-numeric:tabular-nums;}
+</style>
+</head>
+<body>
+
+<!-- ============ NAVBAR ============ -->
+<header class="nav" id="navHeader">
+  <div class="wrap">
+    <a href="#top" class="logo">
+      <span class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#01120b" stroke-width="2" stroke-linecap="round"><path d="M12 22V12"/><path d="M12 12C12 6 7 3 3 3c0 6 3 9 9 9Z"/><path d="M12 12c0-6 5-9 9-9 0 6-3 9-9 9Z"/></svg>
+      </span>
+      <span class="logo-text"><b>Raízen<span style="color:var(--sage-300)">.</span></b><span>Agro Inteligência</span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#top">Início</a>
+      <a href="#solucoes">Soluções</a>
+      <a href="#tecnologia">Tecnologia</a>
+      <a href="#agroia">AgroIA</a>
+      <a href="#planos">Planos</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="#planos" class="btn btn-primary" style="padding:12px 22px;font-size:13.5px;" id="navCtaDesktop">Começar agora →</a>
+      <button class="burger" id="burgerBtn"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="top">
+    <a href="#top" class="logo"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#01120b" stroke-width="2" stroke-linecap="round"><path d="M12 22V12"/><path d="M12 12C12 6 7 3 3 3c0 6 3 9 9 9Z"/><path d="M12 12c0-6 5-9 9-9 0 6-3 9-9 9Z"/></svg></span><span class="logo-text"><b style="color:#fff">Raízen.</b></span></a>
+    <button class="close-btn" id="closeMenuBtn">✕</button>
+  </div>
+  <a href="#top" class="mm-link">Início</a>
+  <a href="#solucoes" class="mm-link">Soluções</a>
+  <a href="#tecnologia" class="mm-link">Tecnologia</a>
+  <a href="#agroia" class="mm-link">AgroIA</a>
+  <a href="#planos" class="mm-link">Planos</a>
+  <a href="#contato" class="mm-link">Contato</a>
+  <div class="mm-cta">
+    <a href="#planos" class="btn btn-primary">Começar agora →</a>
+    <a href="#solucoes" class="btn btn-ghost">Explorar soluções</a>
+  </div>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=1800&q=80" alt="Produtor observando plantação ao amanhecer">
+  </div>
+  <div class="hero-scrim"></div>
+  <div class="scroll-cue"><span>Role para explorar</span><span class="line"></span></div>
+
+  <div class="hero-inner">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div class="hero-copy reveal in">
+          <span class="eyebrow"><span class="dot"></span> Tecnologia para o campo</span>
+          <h1>O futuro do campo<br><em>começa com decisões melhores.</em></h1>
+          <p>Uma plataforma inteligente para ajudar você a acompanhar sua propriedade, transformar dados em decisões e melhorar a eficiência da sua produção.</p>
+          <div class="hero-actions">
+            <a href="#planos" class="btn btn-primary">Conheça a plataforma →</a>
+            <a href="#solucoes" class="btn btn-ghost">Explorar soluções</a>
+          </div>
+        </div>
+
+        <div class="live-card reveal in reveal-delay-2">
+          <div class="lc-head">
+            <span class="pulse-dot"></span>
+            <span>Painel da propriedade · agora</span>
+          </div>
+          <div class="lc-row">
+            <div style="flex:1">
+              <div class="lbl">Umidade do solo</div>
+              <div class="bar-track"><div class="bar-fill" style="width:68%"></div></div>
+            </div>
+            <div class="val good" style="margin-left:14px">68%</div>
+          </div>
+          <div class="lc-row">
+            <div class="lbl">Temperatura</div>
+            <div class="val">24°C</div>
+          </div>
+          <div class="lc-row">
+            <div class="lbl">Chance de chuva (24h)</div>
+            <div class="val">10%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="wrap">
+      <div class="hs-item">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+        <div><div class="num count-up" data-target="25">0</div><div class="lbl">mil+ produtores<br>(número demonstrativo)</div></div>
+      </div>
+      <div class="hs-item">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></span>
+        <div><div class="num"><span class="count-up" data-target="1.2">0</span>M</div><div class="lbl">hectares monitorados<br>(número demonstrativo)</div></div>
+      </div>
+      <div class="hs-item">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
+        <div><div class="num count-up" data-target="40">0</div><div class="lbl">% de eficiência média<br>(número demonstrativo)</div></div>
+      </div>
+      <div class="hs-item">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 22c4.97 0 8-3.5 8-8 0-4-3-7.5-8-12-5 4.5-8 8-8 12 0 4.5 3.03 8 8 8Z"/></svg></span>
+        <div><div class="num count-up" data-target="30">0</div><div class="lbl">% de economia de água<br>(número demonstrativo)</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOLUTIONS ============ -->
+<section class="solutions" id="solucoes">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow dark">O que fazemos</span>
+      <h2>Soluções inteligentes para cada etapa da produção.</h2>
+      <p>Do solo ao mercado: reunimos os dados da sua propriedade em um só lugar para ajudar você a decidir com mais segurança.</p>
+    </div>
+
+    <div class="sol-grid">
+      <div class="sol-card reveal">
+        <div>
+          <div class="sc-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 2 3 7v10l9 5 9-5V7l-9-5Z"/><path d="M3 7l9 5 9-5"/><path d="M12 22V12"/></svg></div>
+          <h3>Gestão da propriedade</h3>
+          <p>Organize áreas, talhões, culturas e atividades em um único lugar.</p>
+        </div>
+        <div class="sc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></div>
+      </div>
+
+      <div class="sol-card reveal reveal-delay-1">
+        <div>
+          <div class="sc-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 2c4 5 7 8.5 7 12.5A7 7 0 0 1 5 14.5C5 10.5 8 7 12 2Z"/></svg></div>
+          <h3>Monitoramento das plantações</h3>
+          <p>Acompanhe as condições das culturas e identifique problemas rapidamente.</p>
+        </div>
+        <div class="sc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></div>
+      </div>
+
+      <div class="sol-card reveal reveal-delay-2">
+        <div>
+          <div class="sc-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          <h3>Inteligência para irrigação</h3>
+          <p>Monitore a umidade e as condições climáticas para melhorar o uso da água.</p>
+        </div>
+        <div class="sc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></div>
+      </div>
+
+      <div class="sol-card reveal reveal-delay-3">
+        <div>
+          <div class="sc-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 20h18"/><path d="M5 20V10l7-6 7 6v10"/><path d="M9 20v-6h6v6"/></svg></div>
+          <h3>Saúde do solo &amp; talhões</h3>
+          <p>Tenha informações para tomar decisões melhores sobre sua produção.</p>
+        </div>
+        <div class="sc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></div>
+      </div>
+
+      <div class="sol-card reveal">
+        <div>
+          <div class="sc-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M17.5 19a4.5 4.5 0 1 0-2.4-8.3"/><path d="M9 10a4.5 4.5 0 1 0-4.4 5.5H17"/><path d="M8 15l3 3 5-6"/></svg></div>
+          <h3>Clima</h3>
+          <p>Acompanhe informações climáticas importantes para sua propriedade.</p>
+        </div>
+        <div class="sc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></div>
+      </div>
+
+      <div class="sol-card reveal reveal-delay-1">
+        <div>
+          <div class="sc-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 2v4M16 2v4"/></svg></div>
+          <h3>Gestão financeira</h3>
+          <p>Controle custos, investimentos, receitas e resultados da propriedade.</p>
+        </div>
+        <div class="sc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></div>
+      </div>
+
+      <div class="sol-card reveal reveal-delay-2">
+        <div>
+          <div class="sc-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 3v18h18"/><rect x="7" y="13" width="3" height="5"/><rect x="12" y="9" width="3" height="9"/><rect x="17" y="6" width="3" height="12"/></svg></div>
+          <h3>Inteligência de mercado</h3>
+          <p>Acompanhe preços e informações importantes para comercialização.</p>
+        </div>
+        <div class="sc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></div>
+      </div>
+
+      <div class="sol-card reveal reveal-delay-3">
+        <div>
+          <div class="sc-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 2a4 4 0 0 1 4 4c0 2-2 3-2 5h-4c0-2-2-3-2-5a4 4 0 0 1 4-4Z"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></div>
+          <h3>AgroIA — assistente</h3>
+          <p>Converse com uma IA que conhece os dados reais da sua propriedade.</p>
+        </div>
+        <div class="sc-arrow"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TECH / DASHBOARD ============ -->
+<section class="tech" id="tecnologia">
+  <div class="wrap">
+    <div class="tech-grid">
+      <div class="tech-copy reveal">
+        <span class="eyebrow dark">Nossa tecnologia</span>
+        <h2 style="margin-top:16px">Dados. IA. IoT.<br>Tudo conectado.</h2>
+        <p>Usamos sensores, satélite e inteligência artificial para transformar informações da sua propriedade em decisões simples, no seu ritmo.</p>
+        <ul class="check-list">
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Monitoramento em tempo real</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Recomendações orientadas por IA</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Sensores IoT e imagens de satélite</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>Fácil de usar na web e no celular</li>
+        </ul>
+        <a href="#planos" class="btn btn-dark">Ver planos</a>
+      </div>
+
+      <div class="dash reveal reveal-delay-2">
+        <div class="dash-top">
+          <div class="dt-left"><span class="sq"></span> Visão geral da propriedade</div>
+          <span class="dash-tag">Dados ilustrativos</span>
+        </div>
+        <div class="dash-kpis">
+          <div class="kpi"><div class="k-lbl">Área total</div><div class="k-val">12<small>talhões</small></div></div>
+          <div class="kpi"><div class="k-lbl">Produtividade prevista</div><div class="k-val">3.6<small>ton/ha</small></div></div>
+          <div class="kpi"><div class="k-lbl">Culturas ativas</div><div class="k-val">6</div></div>
+          <div class="kpi"><div class="k-lbl">Saúde do talhão</div><div class="k-val">85<small>%</small></div></div>
+        </div>
+        <div class="dash-mid">
+          <div class="panel">
+            <div class="p-head"><span>Produtividade — 6 meses</span><span style="color:var(--sage-300)">↑ 8%</span></div>
+            <svg class="spark" viewBox="0 0 300 64" preserveAspectRatio="none">
+              <polyline points="0,50 45,42 90,46 135,28 180,32 225,14 270,20 300,10" fill="none" stroke="#B8DDB5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="0,50 45,42 90,46 135,28 180,32 225,14 270,20 300,10 300,64 0,64" fill="url(#sparkfill)" stroke="none" opacity="0.25"/>
+              <defs><linearGradient id="sparkfill" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B8DDB5"/><stop offset="1" stop-color="#B8DDB5" stop-opacity="0"/></linearGradient></defs>
+            </svg>
+          </div>
+          <div class="panel">
+            <div class="p-head"><span>Saúde geral</span></div>
+            <div class="gauge-wrap">
+              <div class="gauge"><div class="g-inner">85%</div></div>
+              <div class="gauge-txt"><b>Boa condição</b><span>Baseado em 12 talhões</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="dash-bottom">
+          <div class="p-head" style="margin-bottom:6px"><span>Atividade recente</span></div>
+          <div class="act-row"><i class="dotc" style="background:#6be08a"></i> Irrigação concluída — Talhão 3<span class="time">2h atrás</span></div>
+          <div class="act-row"><i class="dotc" style="background:#B8DDB5"></i> Adubação aplicada — Talhão 6<span class="time">5h atrás</span></div>
+          <div class="act-row"><i class="dotc" style="background:#e7b65c"></i> Controle de pragas — Talhão 2<span class="time">1d atrás</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MAP ============ -->
+<section class="map-section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Mapa da propriedade</span>
+      <h2>Visualize cada talhão da sua fazenda.</h2>
+      <p>Acompanhe áreas de plantio, irrigação e pontos de monitoramento em um mapa vivo e interativo.</p>
+    </div>
+
+    <div class="map-grid">
+      <div class="map-canvas reveal reveal-delay-1">
+        <div class="plot" style="left:6%;top:12%;width:26%;height:34%;background:rgba(184,221,181,0.5);"></div>
+        <div class="plot" style="left:34%;top:10%;width:22%;height:22%;background:rgba(184,221,181,0.3);"></div>
+        <div class="plot" style="left:6%;top:50%;width:20%;height:36%;background:rgba(231,182,92,0.32);"></div>
+        <div class="plot" style="left:30%;top:36%;width:28%;height:30%;background:rgba(184,221,181,0.4);"></div>
+        <div class="plot" style="left:62%;top:14%;width:30%;height:28%;background:rgba(184,221,181,0.22);"></div>
+        <div class="plot" style="left:60%;top:48%;width:32%;height:38%;background:rgba(184,221,181,0.36);"></div>
+
+        <div class="marker" style="left:19%;top:29%;">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><path d="M12 2 3 7v10l9 5 9-5V7l-9-5Z"/></svg>
+          <span class="tooltip">Talhão 01 — Soja · ótimo</span>
+        </div>
+        <div class="marker" style="left:16%;top:68%;" >
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><path d="M12 2 3 7v10l9 5 9-5V7l-9-5Z"/></svg>
+          <span class="tooltip">Talhão 03 — Milho · atenção</span>
+        </div>
+        <div class="marker alert" style="left:44%;top:52%;">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+          <span class="tooltip">Umidade abaixo do ideal</span>
+        </div>
+        <div class="marker" style="left:77%;top:28%;">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><path d="M12 2 3 7v10l9 5 9-5V7l-9-5Z"/></svg>
+          <span class="tooltip">Talhão 05 — Café · ótimo</span>
+        </div>
+        <div class="marker" style="left:76%;top:66%;">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round"><path d="M12 2 3 7v10l9 5 9-5V7l-9-5Z"/></svg>
+          <span class="tooltip">Talhão 07 — Pastagem · bom</span>
+        </div>
+
+        <div class="map-legend">
+          <span><i style="background:var(--sage-300)"></i> Condição boa</span>
+          <span><i style="background:#e7b65c"></i> Requer atenção</span>
+        </div>
+      </div>
+
+      <div class="map-side reveal reveal-delay-2">
+        <div class="side-card">
+          <div class="sc-top"><b>Talhão 03 — Milho</b><span class="tag warn">Atenção</span></div>
+          <p>Umidade do solo 8% abaixo do ideal. Baixa chance de chuva nas próximas 24h.</p>
+        </div>
+        <div class="side-card">
+          <div class="sc-top"><b>Talhão 01 — Soja</b><span class="tag ok">Ótimo</span></div>
+          <p>Condições ideais de umidade, temperatura e desenvolvimento da cultura.</p>
+        </div>
+        <div class="side-card">
+          <div class="sc-top"><b>Irrigação — Setor Norte</b><span class="tag ok">Ativa</span></div>
+          <p>Ciclo automático em andamento. Próxima verificação em 4h.</p>
+        </div>
+        <div class="side-card">
+          <div class="sc-top"><b>Sensores conectados</b><span class="tag ok">18/18</span></div>
+          <p>Todos os sensores de campo estão online e enviando dados normalmente.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="how">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow dark">Como funciona</span>
+      <h2>Da propriedade ao painel, em quatro passos.</h2>
+    </div>
+    <div class="how-grid">
+      <div class="how-step reveal">
+        <div class="hs-num">01</div>
+        <h3>Cadastre sua propriedade</h3>
+        <p>Adicione as informações básicas da sua fazenda em poucos minutos.</p>
+      </div>
+      <div class="how-step reveal reveal-delay-1">
+        <div class="hs-num">02</div>
+        <h3>Adicione talhões e culturas</h3>
+        <p>Delimite áreas de plantio e defina as culturas de cada talhão.</p>
+      </div>
+      <div class="how-step reveal reveal-delay-2">
+        <div class="hs-num">03</div>
+        <h3>Acompanhe seus dados</h3>
+        <p>Visualize clima, solo, irrigação e produtividade em tempo real.</p>
+      </div>
+      <div class="how-step reveal reveal-delay-3">
+        <div class="hs-num">04</div>
+        <h3>Tome decisões melhores</h3>
+        <p>Use os dados e a AgroIA para agir com mais segurança e menos desperdício.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATS ============ -->
+<section class="stats">
+  <div class="wrap">
+    <div class="stats-grid">
+      <div class="stat-item reveal"><div class="st-num"><span class="count-up" data-target="25">0</span>mil+</div><div class="st-lbl">Produtores</div></div>
+      <div class="stat-item reveal reveal-delay-1"><div class="st-num"><span class="count-up" data-target="1.2">0</span>M</div><div class="st-lbl">Hectares monitorados</div></div>
+      <div class="stat-item reveal reveal-delay-2"><div class="st-num"><span class="count-up" data-target="40">0</span>%</div><div class="st-lbl">Mais eficiência</div></div>
+      <div class="stat-item reveal reveal-delay-3"><div class="st-num"><span class="count-up" data-target="30">0</span>%</div><div class="st-lbl">Economia de água</div></div>
+    </div>
+    <p class="stats-note">* Números demonstrativos para fins de apresentação. Serão substituídos por dados reais da plataforma.</p>
+  </div>
+</section>
+
+<!-- ============ AGROIA ============ -->
+<section class="agroia-section" id="agroia">
+  <div class="wrap">
+    <div class="ag-grid">
+      <div class="ag-copy reveal">
+        <span class="eyebrow">AgroIA</span>
+        <h2 style="margin-top:16px">Seu campo. Seus dados.<br>Seu assistente inteligente.</h2>
+        <p>A AgroIA transforma os dados da sua propriedade em informações simples para ajudar você a tomar decisões mais rápidas e inteligentes.</p>
+        <div class="ag-quick">
+          <span>🌱 Analisar minha propriedade</span>
+          <span>💧 Analisar irrigação</span>
+          <span>📈 Analisar produtividade</span>
+          <span>📋 Resumo da semana</span>
+        </div>
+        <a href="#" class="btn btn-primary" id="openAiFromSection">Conversar com a AgroIA →</a>
+      </div>
+
+      <div class="chat-mock reveal reveal-delay-2">
+        <div class="cm-head">
+          <span class="orb"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 2a4 4 0 0 1 4 4c0 2-2 3-2 5h-4c0-2-2-3-2-5a4 4 0 0 1 4-4Z"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></span>
+          <b>AgroIA</b>
+        </div>
+        <div class="msg user">Preciso irrigar algum talhão?</div>
+        <div class="msg bot">O <b>Talhão 03</b> apresenta umidade abaixo do ideal, e a previsão indica baixa chance de chuva nas próximas 24h. Considere verificar a irrigação dessa área.<span class="src">Baseado em sensores de umidade + previsão climática</span></div>
+        <div class="msg user">Qual talhão teve pior desempenho?</div>
+        <div class="msg bot">O <b>Talhão 03</b> teve a menor produtividade estimada do mês. Ainda não há dados suficientes para apontar a causa com certeza — recomendo revisar irrigação e adubação recente.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="pricing" id="planos">
+  <div class="wrap">
+    <div class="section-head reveal" style="margin-left:auto;margin-right:auto;text-align:center;">
+      <span class="eyebrow dark">Planos</span>
+      <h2>Invista em decisões melhores para sua propriedade.</h2>
+      <p style="margin-left:auto;margin-right:auto;">Você não está pagando por um aplicativo — está investindo em mais controle, mais informação e melhores decisões. Preços abaixo são valores de referência (configuráveis).</p>
+    </div>
+
+    <div class="price-grid">
+      <div class="plan reveal">
+        <div class="p-name">Essencial</div>
+        <div class="p-price"><span class="amt">R$ XX</span><span class="per">/mês</span></div>
+        <p class="p-desc">Para pequenos produtores que estão começando a organizar a propriedade com dados.</p>
+        <ul class="p-feats">
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg></span>Até 3 talhões</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg></span>Monitoramento climático</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg></span>Painel básico da propriedade</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg></span>AgroIA — perguntas limitadas</li>
+        </ul>
+        <a href="#contato" class="btn btn-outline-dark">Começar agora</a>
+      </div>
+
+      <div class="plan featured reveal reveal-delay-1">
+        <span class="badge">Mais escolhido</span>
+        <div class="p-name">Profissional</div>
+        <div class="p-price"><span class="amt">R$ XX</span><span class="per">/mês</span></div>
+        <p class="p-desc">Para produtores que precisam de mais recursos e acompanhamento contínuo.</p>
+        <ul class="p-feats">
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg></span>Talhões ilimitados</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg></span>Mapa interativo da propriedade</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg></span>Alertas de irrigação e clima</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg></span>Gestão financeira completa</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg></span>AgroIA sem limites</li>
+        </ul>
+        <a href="#contato" class="btn btn-primary">Começar agora</a>
+      </div>
+
+      <div class="plan reveal reveal-delay-2">
+        <div class="p-name">Premium</div>
+        <div class="p-price"><span class="amt">R$ XX</span><span class="per">/mês</span></div>
+        <p class="p-desc">Para propriedades maiores e times que precisam de ferramentas avançadas.</p>
+        <ul class="p-feats">
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg></span>Múltiplas propriedades</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg></span>Inteligência de mercado avançada</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg></span>Usuários e permissões de equipe</li>
+          <li><span class="ck"><svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><path d="M20 6 9 17l-5-5"/></svg></span>Suporte prioritário</li>
+        </ul>
+        <a href="#contato" class="btn btn-outline-dark">Falar com vendas</a>
+      </div>
+    </div>
+    <p class="plan-note">Os resultados dependem das condições de cada propriedade e do uso da plataforma. Preços de exemplo — ajuste conforme sua tabela.</p>
+  </div>
+</section>
+
+<!-- ============ CTA BAND ============ -->
+<section class="cta-band" id="contato">
+  <div class="wrap cta-inner">
+    <div>
+      <h2>Vamos construir um campo mais eficiente, juntos.</h2>
+      <p>Junte-se a produtores que estão transformando dados em resultados com a Raízen.</p>
+    </div>
+    <a href="#planos" class="btn btn-primary">Começar agora →</a>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="f-top">
+      <div class="f-brand">
+        <a href="#top" class="logo"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#01120b" stroke-width="2" stroke-linecap="round"><path d="M12 22V12"/><path d="M12 12C12 6 7 3 3 3c0 6 3 9 9 9Z"/><path d="M12 12c0-6 5-9 9-9 0 6-3 9-9 9Z"/></svg></span><span class="logo-text"><b style="color:#fff">Raízen.</b></span></a>
+        <p>Tecnologia, dados e inteligência artificial para ajudar produtores a produzir mais, desperdiçar menos e decidir melhor.</p>
+        <div class="f-social">
+          <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+          <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M22 4s-.7 2-2 3c1.3 8-7 13-14 9 2.5.2 5-.7 6.5-2.2C9 13.4 6.7 11.5 6 8.5c.8.2 1.6.1 2.3-.2C5.5 7.4 4 5 4.5 2.5c2.6 2 5.8 3.3 9 3.4C13.2 3 15.8 1.7 18 3.2c1.2 0 2.3-.5 3-1.2-.4 1.3-1.2 2.4-2.3 3.1C19.7 5 20.7 4.6 22 4Z"/></svg></a>
+          <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        </div>
+      </div>
+      <div class="f-col">
+        <h4>Soluções</h4>
+        <ul><li><a href="#solucoes">Gestão da propriedade</a></li><li><a href="#solucoes">Monitoramento</a></li><li><a href="#solucoes">Irrigação</a></li><li><a href="#solucoes">Saúde do solo</a></li></ul>
+      </div>
+      <div class="f-col">
+        <h4>Recursos</h4>
+        <ul><li><a href="#tecnologia">Tecnologia</a></li><li><a href="#">Mapa da propriedade</a></li><li><a href="#">Central de ajuda</a></li><li><a href="#">Blog</a></li></ul>
+      </div>
+      <div class="f-col">
+        <h4>AgroIA</h4>
+        <ul><li><a href="#agroia">Como funciona</a></li><li><a href="#">Exemplos de uso</a></li><li><a href="#">Privacidade dos dados</a></li></ul>
+      </div>
+      <div class="f-col">
+        <h4>Empresa</h4>
+        <ul><li><a href="#planos">Planos</a></li><li><a href="#">Sobre nós</a></li><li><a href="#contato">Contato</a></li></ul>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <span>© 2026 Raízen Agro Inteligência. Todos os direitos reservados.</span>
+      <div class="legal"><a href="#">Termos de uso</a><a href="#">Política de privacidade</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ AGROIA FLOATING ============ -->
+<button class="ai-fab" id="aiFab" aria-label="Abrir AgroIA">
+  <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 2a4 4 0 0 1 4 4c0 2-2 3-2 5h-4c0-2-2-3-2-5a4 4 0 0 1 4-4Z"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+</button>
+
+<div class="ai-panel" id="aiPanel">
+  <div class="ai-p-head">
+    <span class="orb"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 2a4 4 0 0 1 4 4c0 2-2 3-2 5h-4c0-2-2-3-2-5a4 4 0 0 1 4-4Z"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></span>
+    <div class="titles"><b>AgroIA</b><div class="status"><i></i> Conectada à sua propriedade</div></div>
+    <button class="ai-p-close" id="aiClose">✕</button>
+  </div>
+  <div class="ai-p-body" id="aiBody">
+    <div class="msg bot">Olá! Sou a AgroIA. Posso analisar os dados da sua propriedade e ajudar você a decidir. O que você quer saber?</div>
+  </div>
+  <div class="ai-quick-row">
+    <button class="ai-chip" data-q="Analisar minha propriedade">Analisar propriedade</button>
+    <button class="ai-chip" data-q="Ver problemas">Ver problemas</button>
+    <button class="ai-chip" data-q="Analisar irrigação">Analisar irrigação</button>
+    <button class="ai-chip" data-q="Analisar produtividade">Analisar produtividade</button>
+    <button class="ai-chip" data-q="Resumo da semana">Resumo da semana</button>
+  </div>
+  <div class="ai-p-input">
+    <input type="text" id="aiInput" placeholder="Pergunte algo sobre sua propriedade...">
+    <button id="aiSend"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m3 3 18 9-18 9V3Z"/></svg></button>
+  </div>
+</div>
+
+<script>
+// ===== Navbar scroll state =====
+const navHeader = document.getElementById('navHeader');
+window.addEventListener('scroll', () => {
+  navHeader.classList.toggle('scrolled', window.scrollY > 40);
+}, {passive:true});
+
+// ===== Mobile menu =====
+const burgerBtn = document.getElementById('burgerBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+const closeMenuBtn = document.getElementById('closeMenuBtn');
+burgerBtn.addEventListener('click', () => mobileMenu.classList.add('open'));
+closeMenuBtn.addEventListener('click', () => mobileMenu.classList.remove('open'));
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+// ===== Scroll reveal =====
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+}, {threshold:0.15});
+revealEls.forEach(el => io.observe(el));
+
+// ===== Count up numbers =====
+const counters = document.querySelectorAll('.count-up');
+const counterIO = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(!entry.isIntersecting) return;
+    const el = entry.target;
+    const target = parseFloat(el.dataset.target);
+    const isDecimal = target % 1 !== 0;
+    let current = 0;
+    const duration = 1400;
+    const start = performance.now();
+    function tick(now){
+      const p = Math.min((now-start)/duration, 1);
+      const eased = 1 - Math.pow(1-p, 3);
+      current = target * eased;
+      el.textContent = isDecimal ? current.toFixed(1) : Math.round(current);
+      if(p < 1) requestAnimationFrame(tick);
+      else el.textContent = isDecimal ? target.toFixed(1) : target;
+    }
+    requestAnimationFrame(tick);
+    counterIO.unobserve(el);
+  });
+}, {threshold:0.4});
+counters.forEach(c => counterIO.observe(c));
+
+// ===== AgroIA widget =====
+const aiFab = document.getElementById('aiFab');
+const aiPanel = document.getElementById('aiPanel');
+const aiClose = document.getElementById('aiClose');
+const aiBody = document.getElementById('aiBody');
+const aiInput = document.getElementById('aiInput');
+const aiSend = document.getElementById('aiSend');
+const openAiFromSection = document.getElementById('openAiFromSection');
+
+function openAi(){ aiPanel.classList.add('open'); aiInput.focus(); }
+function closeAi(){ aiPanel.classList.remove('open'); }
+aiFab.addEventListener('click', () => aiPanel.classList.contains('open') ? closeAi() : openAi());
+aiClose.addEventListener('click', closeAi);
+openAiFromSection.addEventListener('click', (e) => { e.preventDefault(); openAi(); });
+
+const RESPONSES = {
+  "analisar minha propriedade": "Sua propriedade tem <b>12 talhões</b> ativos, com saúde geral estimada em <b>85%</b>. A maioria das áreas está em condição boa; o Talhão 03 é o único que pede atenção no momento.<span class='src'>Baseado nos dados mais recentes de sensores e imagens</span>",
+  "ver problemas": "Encontrei <b>1 ponto de atenção</b>: o Talhão 03 está com umidade do solo abaixo do ideal e baixa chance de chuva nas próximas 24h. Os demais talhões não apresentam alertas ativos no momento.<span class='src'>Baseado em sensores de umidade e previsão climática</span>",
+  "analisar irrigação": "O ciclo de irrigação do Setor Norte está ativo e dentro do esperado. Já o Talhão 03 não recebeu irrigação nas últimas 18h e está com umidade abaixo da faixa ideal — pode valer a pena revisar essa área.<span class='src'>Baseado em sensores de irrigação e umidade</span>",
+  "analisar produtividade": "A produtividade média projetada é de <b>3.6 ton/ha</b>, um crescimento de 8% em relação aos últimos 6 meses. O Talhão 03 apresenta a menor estimativa do grupo — ainda não há dados suficientes para confirmar a causa exata.<span class='src'>Baseado em histórico de colheita e imagens de satélite</span>",
+  "resumo da semana": "Nesta semana: 3 ciclos de irrigação concluídos, 1 aplicação de adubo registrada e 1 alerta de umidade no Talhão 03. A saúde geral da propriedade se manteve estável em torno de 85%.<span class='src'>Resumo baseado nas atividades registradas na plataforma</span>"
+};
+const FALLBACK = "Ainda não tenho dados suficientes para responder com certeza sobre isso. Posso analisar sua propriedade, ver problemas ativos, irrigação ou produtividade — quer tentar uma dessas opções?";
+
+function addMsg(text, who){
+  const div = document.createElement('div');
+  div.className = 'msg ' + who;
+  div.innerHTML = text;
+  aiBody.appendChild(div);
+  aiBody.scrollTop = aiBody.scrollHeight;
+}
+function showTyping(){
+  const t = document.createElement('div');
+  t.className = 'typing';
+  t.id = 'typingNow';
+  t.innerHTML = '<i></i><i></i><i></i>';
+  aiBody.appendChild(t);
+  aiBody.scrollTop = aiBody.scrollHeight;
+}
+function removeTyping(){ const t = document.getElementById('typingNow'); if(t) t.remove(); }
+
+function handleQuery(q){
+  addMsg(q, 'user');
+  showTyping();
+  const key = q.trim().toLowerCase();
+  const resp = RESPONSES[key] || FALLBACK;
+  setTimeout(() => {
+    removeTyping();
+    addMsg(resp, 'bot');
+  }, 900 + Math.random()*500);
+}
+
+document.querySelectorAll('.ai-chip').forEach(chip => {
+  chip.addEventListener('click', () => handleQuery(chip.dataset.q));
+});
+aiSend.addEventListener('click', () => {
+  const v = aiInput.value.trim();
+  if(!v) return;
+  handleQuery(v);
+  aiInput.value = '';
+});
+aiInput.addEventListener('keydown', (e) => {
+  if(e.key === 'Enter'){ aiSend.click(); }
+});
+</script>
+</body>
+</html>
